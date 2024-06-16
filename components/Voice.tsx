@@ -1,7 +1,5 @@
 "use client";
-
 import React, { useState } from "react";
-import { Button } from "./ui/button";
 
 const Voice = () => {
   const [text, setText] = useState<string>("");
@@ -13,16 +11,29 @@ const Voice = () => {
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     const recognition = new SpeechRecognition();
+    recognition.continuous = true; // Enable continuous listening
+    recognition.interimResults = true; // Allow interim results
 
-    recognition.onresult = async (event: SpeechRecognitionEvent) => {
-      console.log(event);
-      const transcript = event.results[0][0].transcript;
-      setText(transcript);
-      if (transcript.toLowerCase().startsWith("question")) {
-        const question = transcript.replace(/^question\s*/i, "") + "?";
-        setQuestions((prev) => [...prev, question]);
-      } else {
-        setAnswers((prev) => [...prev, transcript]);
+    recognition.onresult = (event: SpeechRecognitionEvent) => {
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        const transcript = event.results[i][0].transcript.trim();
+        setText(transcript);
+
+        if (event.results[i].isFinal) {
+          if (transcript.toLowerCase().startsWith("question")) {
+            const question = transcript.replace(/^question\s*/i, "") + "?";
+            setQuestions((prev) => [...prev, question]);
+          } else if (transcript.toLowerCase().startsWith("answer")) {
+            const answer = transcript.replace(/^answer\s*/i, "");
+            setAnswers((prev) => [...prev, answer]);
+          } else if (
+            transcript.toLowerCase() === "ok" ||
+            transcript.toLowerCase() === "done"
+          ) {
+            recognition.stop();
+            break;
+          }
+        }
       }
     };
 
@@ -39,9 +50,7 @@ const Voice = () => {
 
   return (
     <div>
-      <Button variant={"outline"} onClick={() => handleRecord()}>
-        Start
-      </Button>
+      <button onClick={() => handleRecord()}>Start</button>
       <div>
         <h2>Questions</h2>
         <ul>
