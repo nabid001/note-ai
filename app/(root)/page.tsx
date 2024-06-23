@@ -1,13 +1,19 @@
 import Voice from "@/components/Voice";
-import { UserProfile } from "@clerk/nextjs";
+import {
+  SignInButton,
+  SignedOut,
+  UserButton,
+  UserProfile,
+} from "@clerk/nextjs";
 
 export default function Home() {
   return (
     <div className="flex min-h-screen items-center justify-center flex-col gap-3">
-      {/* <h1>Hello World</h1> */}
+      <UserButton />
 
-      {/* <UserProfile /> */}
-
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
       <Voice />
     </div>
   );
