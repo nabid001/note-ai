@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Button } from "./ui/button";
 
 const Voice = () => {
+  // eslint-disable-next-line no-unused-vars
   const [text, setText] = useState("");
   const [questions, setQuestions] = useState<string>();
   const [answers, setAnswers] = useState<string>();
