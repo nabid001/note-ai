@@ -17,6 +17,8 @@ if (!cached) {
 }
 
 export const connectToDatabase = async () => {
+  mongoose.set("strictQuery", true);
+
   if (cached.conn) return cached.conn;
 
   if (!MONGODB_URL) throw new Error("Missing MONGODB_URL");
