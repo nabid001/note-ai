@@ -1,5 +1,5 @@
 import Voice from "@/components/Voice";
-import { SignInButton, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignUpButton, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
@@ -7,7 +7,7 @@ export default function Home() {
       <UserButton />
 
       <SignedOut>
-        <SignInButton />
+        <SignUpButton />
       </SignedOut>
       <Voice />
     </div>
