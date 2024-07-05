@@ -41,7 +41,7 @@ const Notes = async ({
         {notes.length > 0 ? (
           notes.map((note: NoteProps) => (
             <div key={note._id}>
-              <Card className="max-w-sm shadow-md">
+              <Card className="max-w-sm shadow-md ">
                 <CardHeader>
                   <CardTitle>{note.question}</CardTitle>
                   <CardDescription className="w-fit rounded-full bg-orange-300 px-2 text-[12px] font-bold capitalize text-black/80">

@@ -19,8 +19,9 @@ export default async function Home() {
       <VoiceForm mongoId={JSON.stringify(mongoUser._id)} />
 
       {/* TODO: add type to Notes down below and then render all the note to the notes page */}
-
-      <Notes type="home" author={mongoUser._id} clerkId={userId} />
+      <div className="px-5">
+        <Notes type="home" author={mongoUser._id} clerkId={userId} />
+      </div>
     </div>
   );
 }
