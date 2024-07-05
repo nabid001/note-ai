@@ -5,6 +5,18 @@ import { connectToDatabase } from "../mongoose";
 import { CreateUserParams, UpdateUserParams } from "@/types";
 import { revalidatePath } from "next/cache";
 
+export async function getUserByClerkId({ clerkId }: { clerkId: string }) {
+  try {
+    await connectToDatabase();
+
+    const user = await User.findOne({ clerkId });
+
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+}
 export async function createUser(userData: CreateUserParams) {
   try {
     await connectToDatabase();

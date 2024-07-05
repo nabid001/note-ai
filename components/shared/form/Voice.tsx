@@ -1,14 +1,26 @@
 "use client";
-import React, { useState } from "react";
-import { Button } from "./ui/button";
+import React, { Dispatch, SetStateAction } from "react";
+import { Button } from "../../ui/button";
 
-const Voice = () => {
-  // eslint-disable-next-line no-unused-vars
-  const [text, setText] = useState("");
-  const [questions, setQuestions] = useState<string>();
-  const [answers, setAnswers] = useState<string>();
+type VoiceProps = {
+  onChangeValue: (...event: any[]) => void;
+  value: string;
+  setQuestions: Dispatch<SetStateAction<string | undefined>>;
+  setAnswers: Dispatch<SetStateAction<string | undefined>>;
+  questions: string | undefined;
+  answers: string | undefined;
+};
 
-  const handleRecord = () => {
+const Voice = ({
+  onChangeValue,
+  value,
+  setQuestions,
+  setAnswers,
+  questions,
+  answers,
+}: VoiceProps) => {
+  const handleRecord = (e: any) => {
+    e.preventDefault();
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -16,7 +28,8 @@ const Voice = () => {
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
-      setText(transcript);
+      onChangeValue(transcript);
+      // Todo: console.log the transcript value
       if (transcript.toLowerCase().startsWith("question")) {
         const question = transcript.replace(/^question\s*/i, "").trim() + "?";
         // setQuestions((prev) => [...prev, question]);
@@ -31,7 +44,8 @@ const Voice = () => {
     recognition.start();
   };
 
-  const handleClear = () => {
+  const handleClear = (e: any) => {
+    e.preventDefault();
     setQuestions("");
     setAnswers("");
   };
@@ -46,10 +60,10 @@ const Voice = () => {
           Clear
         </Button>
       </div>
-      <div className="flex flex-col gap-3">
-        <h2>QA Pairs</h2>
-        {questions && <b>Q: {questions}</b>}
-        {answers && <b>A: {answers}</b>}
+      <div className="flex min-w-[90%] flex-col gap-3">
+        <h2 className="text-base font-semibold text-black/85">QA Pairs:</h2>
+        {questions && <p className="text-[18px] ">Q: {questions}</p>}
+        {answers && <p className="text-[18px]">A: {answers}</p>}
       </div>
     </>
   );
