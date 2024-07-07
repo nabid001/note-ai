@@ -1,5 +1,5 @@
 "use client";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { useState, Dispatch, SetStateAction } from "react";
 import { Button } from "../../ui/button";
 
 type VoiceProps = {
@@ -19,30 +19,36 @@ const Voice = ({
   questions,
   answers,
 }: VoiceProps) => {
+  const [language, setLanguage] = useState<"en-US" | "bn-BD">("en-US");
+
   const handleRecord = (e: any) => {
     e.preventDefault();
+
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
 
     const recognition = new SpeechRecognition();
 
-    // change the language to Bangla
-    recognition.lang = "bn-BD";
+    // Set language based on toggle state
+    recognition.lang = language;
 
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       onChangeValue(transcript);
+
       if (
-        transcript.toLowerCase().startsWith("question ") ||
-        transcript.toLowerCase().startsWith("প্রশ্ন")
+        transcript.toLowerCase().startsWith("question") ||
+        transcript.startsWith("প্রশ্ন")
       ) {
         const question =
-          transcript.replace(/^question|প্রশ্ন\s*/i, "").trim() + "?";
-        // setQuestions((prev) => [...prev, question]);
+          transcript.replace(/^(question|প্রশ্ন)\s*/i, "").trim() + "?";
         setQuestions(question);
-      } else {
-        const answer = transcript.replace(/^answer|উত্তর\s*/i, "") + ".";
-        // setAnswers((prev) => [...prev, answer]);
+      } else if (
+        transcript.toLowerCase().startsWith("answer") ||
+        transcript.startsWith("উত্তর")
+      ) {
+        const answer =
+          transcript.replace(/^(answer|উত্তর)\s*/i, "").trim() + ".";
         setAnswers(answer);
       }
     };
@@ -52,8 +58,17 @@ const Voice = ({
 
   const handleClear = (e: any) => {
     e.preventDefault();
+
     setQuestions("");
     setAnswers("");
+  };
+
+  const toggleLanguage = (e: any) => {
+    e.preventDefault();
+
+    setLanguage((prevLanguage) =>
+      prevLanguage === "en-US" ? "bn-BD" : "en-US"
+    );
   };
 
   return (
@@ -64,6 +79,9 @@ const Voice = ({
         </Button>
         <Button variant="destructive" onClick={handleClear}>
           Clear
+        </Button>
+        <Button variant="outline" onClick={toggleLanguage}>
+          {language === "en-US" ? "Switch to Bengali" : "Switch to English"}
         </Button>
       </div>
       <div className="flex min-w-[90%] flex-col gap-3">
