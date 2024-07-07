@@ -1,3 +1,4 @@
+import React from "react";
 import VoiceForm from "@/components/shared/form/VoiceForm";
 import Notes from "@/components/shared/Notes";
 import { getUserByClerkId } from "@/lib/actions/user.action";

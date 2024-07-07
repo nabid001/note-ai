@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Note Ai",
   description: "Note Ai is a simple note taking app",
+  icons: {
+    icon: "/assets/icons/logo.svg",
+  },
 };
 
 export default function RootLayout({
