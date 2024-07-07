@@ -26,16 +26,22 @@ const Voice = ({
 
     const recognition = new SpeechRecognition();
 
+    // change the language to Bangla
+    recognition.lang = "bn-BD";
+
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript;
       onChangeValue(transcript);
-      // Todo: console.log the transcript value
-      if (transcript.toLowerCase().startsWith("question")) {
-        const question = transcript.replace(/^question\s*/i, "").trim() + "?";
+      if (
+        transcript.toLowerCase().startsWith("question ") ||
+        transcript.toLowerCase().startsWith("প্রশ্ন")
+      ) {
+        const question =
+          transcript.replace(/^question|প্রশ্ন\s*/i, "").trim() + "?";
         // setQuestions((prev) => [...prev, question]);
         setQuestions(question);
       } else {
-        const answer = transcript.replace(/^answer\s*/i, "") + ".";
+        const answer = transcript.replace(/^answer|উত্তর\s*/i, "") + ".";
         // setAnswers((prev) => [...prev, answer]);
         setAnswers(answer);
       }
