@@ -97,11 +97,11 @@ const VoiceForm = ({ mongoId }: { mongoId: string }) => {
               {/* <FormLabel className="text-orange-600">*</FormLabel> */}
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="w-full text-[1rem]">
-                    <SelectValue placeholder="Select subject" />
+                  <SelectTrigger className="mx-auto w-fit text-sm">
+                    <SelectValue placeholder="Select Subject" />
                   </SelectTrigger>
                 </FormControl>
-                <SelectContent>
+                <SelectContent side="bottom">
                   {subjects.map((item) => (
                     <SelectItem key={item.id} value={item.value}>
                       {item.name}

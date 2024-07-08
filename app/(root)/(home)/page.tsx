@@ -16,8 +16,9 @@ export default async function Home() {
   return (
     <div className="mt-10 flex flex-col items-center justify-center gap-3">
       <h1 className="mb-7 text-4xl font-semibold">Start Taking Note</h1>
-
-      <VoiceForm mongoId={JSON.stringify(mongoUser._id)} />
+      <div>
+        <VoiceForm mongoId={JSON.stringify(mongoUser._id)} />
+      </div>
 
       {/* TODO: add type to Notes down below and then render all the note to the notes page */}
       <div className="px-5">

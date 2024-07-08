@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { Button } from "../../ui/button";
+import Image from "next/image";
 
 type VoiceProps = {
   onChangeValue: (...event: any[]) => void;
@@ -73,16 +74,28 @@ const Voice = ({
 
   return (
     <>
-      <div className="flex gap-3">
-        <Button variant="outline" onClick={handleRecord}>
-          Start
-        </Button>
-        <Button variant="destructive" onClick={handleClear}>
-          Clear
-        </Button>
-        <Button variant="outline" onClick={toggleLanguage}>
-          {language === "en-US" ? "Switch to Bengali" : "Switch to English"}
-        </Button>
+      <div className="flex flex-col items-center gap-3">
+        <Image
+          src="/assets/images/microphone-solid.svg"
+          width={85}
+          height={85}
+          alt="Microphone"
+          onClick={handleRecord}
+          className="origin-center cursor-pointer object-contain "
+        />
+        <div className="flex flex-col gap-2">
+          <Button size="sm" variant="outline" onClick={toggleLanguage}>
+            Change to {language === "en-US" ? "Bangla" : "English"}
+          </Button>
+          <Button
+            size="sm"
+            className="mx-auto w-fit"
+            variant="destructive"
+            onClick={handleClear}
+          >
+            Clear
+          </Button>
+        </div>
       </div>
       <div className="flex min-w-[90%] flex-col gap-3">
         <h2 className="text-base font-semibold text-black/85">QA Pairs:</h2>
